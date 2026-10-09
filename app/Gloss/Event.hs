@@ -11,8 +11,8 @@ import Graphics.Gloss
 import Graphics.Gloss.Interface.IO.Interact
 import Graphics.Gloss.Interface.IO.Game
 import Graphics.Gloss.Interface.Environment
-import System.Exit
-import System.Directory.Extra
+import Prelude hiding (readFile, writeFile)
+import Platform (writeFile, promptLine, quitApp)
 
 -- project libraries
 import Morph
@@ -38,6 +38,7 @@ import qualified Equivalence as Equiv
 import qualified CodeGen
 import Data.Maybe (Maybe(Just))
 import qualified Data.Text.IO as T
+import qualified Data.Text as Text
 import SemanticFree (prettySemanticClean)
 
 
@@ -56,7 +57,7 @@ currentDSL = unsafePerformIO (newIORef "probcirc")
 -- ===============
 
 event :: Event -> World -> IO World
-event (EventKey (SpecialKey KeyEsc) Down _ _) _ = exitSuccess
+event (EventKey (SpecialKey KeyEsc) Down _ _) w = quitApp >> return w
 
 -- zoom 
 event (EventKey (MouseButton WheelDown) Down _ p) (Load size _ l) = return (Load (size-10) (tM (size-10) p) l)
@@ -120,7 +121,7 @@ event (EventKey (Char 'h') Down _ _) w@(World m _ _ _ _ page _) = do
             T.putStrLn code
             putStrLn "----------------------\n"
             let filename = "generated_circuit" ++ CodeGen.fileExtension CodeGen.defaultTarget
-            T.writeFile filename code
+            writeFile filename (Text.unpack code)
             putStrLn $ "Saved to: " ++ filename
 
         Left err ->
@@ -153,10 +154,8 @@ event (EventKey (Char 'c') Down _ _) w = let m = morphism w in do
     let (inAr, outAr) = typeMorph m'
     putStrLn $ "Type: " ++ show inAr ++ " -> " ++ show outAr
     putStrLn "Current morphism will become a new operation."
-    putStrLn "Enter operator character (single char): "
-    opChar <- getLine
-    putStrLn "Enter style string (or press enter for empty): "
-    opStyle <- getLine
+    opChar <- promptLine "Enter operator character (single char): "
+    opStyle <- promptLine "Enter style string (or press enter for empty): "
     dsl <- readIORef currentDSL
     let opName = [head opChar] ++ opStyle
         newLib = defineCompositeOp (head opChar) opStyle m' dsl Map.empty

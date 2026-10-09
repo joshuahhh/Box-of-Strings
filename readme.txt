@@ -19,6 +19,8 @@ Additional features: 		Anton Osvald Kuusk, Tallinn University of Technology
 How to run:
 ===========
 
+There is also a web version that runs in the browser; see web/README.md for how to build and publish it.
+
 If you use Linux or Windows, you might want to try the precompiled binaries. If they do not work, you will need to compile yourself using Haskell.
 
 To run existing build:

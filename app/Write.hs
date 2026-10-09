@@ -4,7 +4,8 @@ import Morph
 import Gloss.World
 import Parse
 import Proof
-import System.Directory (doesFileExist)
+import Prelude hiding (readFile, writeFile)
+import Platform (readFile, writeFile, doesFileExist)
 
 
 morphSaveX :: Int -> Morph -> String

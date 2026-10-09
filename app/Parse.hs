@@ -3,6 +3,7 @@
 module Parse where
 
 -- standard libraries
+import Prelude hiding (readFile, writeFile)
 import Data.Bifunctor
 
 -- in project libraries
@@ -12,6 +13,7 @@ import Morph
 import Theory
 import Par2
 import Proof
+import Platform (readFile)
 
 type Mem = (Morph , Int , Proof , Maybe Proof)
 

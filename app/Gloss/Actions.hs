@@ -7,7 +7,7 @@ import Data.List
 -- extended libraries
 import Graphics.Gloss
 import Graphics.Gloss.Interface.IO.Interact
-import System.Directory
+import Platform (getDirectoryContents)
 
 -- project libraries
 import Matcher
