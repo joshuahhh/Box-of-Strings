@@ -50,6 +50,7 @@ to `main`. To turn it on, go to the repository's **Settings → Pages** and set
   to go back to the original files.
 - Backspace and Delete both act as gloss's Delete key.
 - On a Mac, Ctrl+click works as a right click.
+- Shift+click works as a middle click (for trackpads).
 - For tablets, on-screen ▲/▼/Unfold buttons stand in for the scroll wheel and
   right click. They act on the last place tapped on the diagram (marked with
   a small arrow).

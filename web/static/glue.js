@@ -278,13 +278,15 @@
   }
 
   // Gloss mouse button codes: 0 left, 1 middle, 2 right. On a Mac,
-  // Ctrl+click counts as a right click (as it does elsewhere on macOS).
+  // Ctrl+click counts as a right click (as it does elsewhere on macOS), and
+  // Shift+click counts as a middle click everywhere (trackpads have none).
   const isMac = /Mac/.test(navigator.platform || navigator.userAgent);
   let dragButton = 0;
   let lastRightDown = -Infinity;
   function glossButton(e) {
     if (e.pointerType !== "mouse") return 0;
     if (e.button === 0 && e.ctrlKey && isMac) return 2;
+    if (e.button === 0 && e.shiftKey) return 1;
     return e.button <= 2 ? e.button : e.button + 2;
   }
 
