@@ -364,6 +364,34 @@
     { passive: false }
   );
 
+  // On-screen buttons for touch and pen: scroll wheel and right click,
+  // sent at the last pointer position over the diagram. They react on
+  // pointerdown and never take focus, so a hovering pen keeps its place.
+  const touchControls = $("touch-controls");
+  function showTouchControls() {
+    touchControls.hidden = false;
+  }
+  if (window.matchMedia && matchMedia("(any-pointer: coarse)").matches) showTouchControls();
+  window.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (e.pointerType === "touch" || e.pointerType === "pen") showTouchControls();
+    },
+    true
+  );
+  touchControls.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    const button = { "wheel-up": 3, "wheel-down": 4, "right-click": 2 }[btn.dataset.action];
+    pushKey(2, button, "", 0);
+    pushKey(2, button, "", 1);
+    btn.classList.add("pressed");
+    setTimeout(() => btn.classList.remove("pressed"), 150);
+  });
+  touchControls.addEventListener("click", (e) => e.preventDefault());
+  touchControls.addEventListener("contextmenu", (e) => e.preventDefault());
+
   const SPECIAL_KEYS = {
     " ": "KeySpace",
     Escape: "KeyEsc",

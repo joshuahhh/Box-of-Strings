@@ -35,6 +35,14 @@
     <pre id="console-output"></pre>
   </section>
 
+  <!-- Shown on touch/pen devices: stand-ins for the scroll wheel and right
+       click, acting where the pen or finger last was on the diagram. -->
+  <div id="touch-controls" hidden>
+    <button type="button" data-action="wheel-up" aria-label="Previous rewrite (scroll up)">▲</button>
+    <button type="button" data-action="wheel-down" aria-label="Next rewrite (scroll down)">▼</button>
+    <button type="button" data-action="right-click" aria-label="Unfold (right click)">Unfold</button>
+  </div>
+
   <div id="toast" role="status" hidden></div>
   <div id="exited" hidden>The program has ended. <a href="">Reload</a> to start again.</div>
 
@@ -65,6 +73,12 @@
         <li>Typing an unused letter starts a new operation: then type two digits, its number of inputs and outputs.</li>
         <li><b>Backspace</b>/<b>Delete</b> removes the last operation.</li>
       </ul>
+
+      <h3>Tablets</h3>
+      <p>On a touch screen, buttons appear at the bottom left: ▲/▼ stand in for
+        the scroll wheel and <b>Unfold</b> for right-click. They act where your
+        pen last hovered or touched the diagram, so hover over (or tap) a node
+        with the pen, then press the buttons with your other hand.</p>
 
       <h3>Files in the browser</h3>
       <p>The example theories from the project are built in. Changes the program
