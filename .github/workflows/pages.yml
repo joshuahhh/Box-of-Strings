@@ -22,7 +22,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
+      # Emscripten (used by GHC's JS backend when linking) otherwise rebuilds
+      # its C libraries on every run, and GHC only recompiles changed modules
+      # when its build directory is kept.
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ${{ runner.temp }}/emscripten-cache
+            web/.build
+          key: web-build-${{ hashFiles('web/shell.nix') }}-${{ hashFiles('app/**/*.hs', 'web/gloss/**/*.hs') }}
+          restore-keys: web-build-${{ hashFiles('web/shell.nix') }}-
       - name: Build
+        env:
+          EM_CACHE: ${{ runner.temp }}/emscripten-cache
         run: nix-shell web/shell.nix --run web/build.sh
       - uses: actions/upload-pages-artifact@v3
         with:
