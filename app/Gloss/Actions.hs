@@ -286,7 +286,7 @@ clickLine _ w = return w
 clickNode :: (Float , Float) -> Float -> Morph -> [(Float , Float , Bool)] -> Maybe [(Float , Float , Bool)]
 clickNode (mx , my) bs (Op m _ o) ((x , y , _) : l) = let os = sizeOper o in
     if abs (mx-x) <= bs*os && abs (my-y) <= bs*os then
-        Just ((mx , my , True) : deselectNode l)
+        Just ((x , y , True) : deselectNode l)
     else
         fmap ((x , y , False) :) (clickNode (mx , my) bs m l)
 clickNode _ _ _ _ = Nothing
@@ -318,10 +318,12 @@ autostep2 w =   let m = worldMorph w in
                         return (addHistory (RS x n name w') box n (w {morphism = k , coordinates = loc' , wmode = (mode , size , ori)}))
                         --return (w {morphism = n})
 
-moveNode :: Point -> [(Float , Float , Bool)] -> [(Float , Float , Bool)]
+-- Move the selected (dragged) nodes by the mouse movement (dx , dy), so a node
+-- keeps its offset from the pointer instead of jumping to it.
+moveNode :: Vector -> [(Float , Float , Bool)] -> [(Float , Float , Bool)]
 moveNode _ [] = []
-moveNode p ((x , y , False) : l)    =   (x , y , False) : moveNode p l
-moveNode (mx , my) ((_ , _ , True) : l)     =   (mx , my , True) : moveNode (mx , my) l
+moveNode d ((x , y , False) : l)    =   (x , y , False) : moveNode d l
+moveNode (dx , dy) ((x , y , True) : l)     =   (x + dx , y + dy , True) : moveNode (dx , dy) l
 
 newInfo :: Maybe (Rew , Morph , [Rew]) -> Rew -> Morph -> Bool 
 newInfo Nothing _ _ = True 
