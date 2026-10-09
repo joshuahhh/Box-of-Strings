@@ -52,6 +52,6 @@ to `main`. To turn it on, go to the repository's **Settings → Pages** and set
 - On a Mac, Ctrl+click works as a right click.
 - For tablets, on-screen ▲/▼/Unfold buttons stand in for the scroll wheel and
   right click. They act on the last place tapped on the diagram (marked with
-  a small circle).
+  a small arrow).
 - If an action fails with an error, the web version undoes it and reports
   the error in the Console instead of crashing.

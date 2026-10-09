@@ -165,14 +165,13 @@ button:disabled { color: var(--muted); cursor: default; }
 #touch-controls button[data-action="right-click"] { font-size: 13px; }
 #touch-controls button.pressed { background: #dde6f5; border-color: var(--accent); }
 
+/* An arrow cursor whose tip (the image's top-left corner) is on the spot. */
 #tap-marker {
   position: fixed;
-  width: 18px;
-  height: 18px;
-  margin: -9px 0 0 -9px;
-  border: 2px solid #000;
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px #fff;
+  width: 14px;
+  height: 21px;
+  margin: -1px 0 0 -1px; /* the tip is at (1, 1) in the image */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 21'%3E%3Cpath d='M1 1v16l4-4 3 6.5 2.6-1.2-3-6.3H13z' fill='%23000' stroke='%23fff' stroke-width='1.4' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat;
   pointer-events: none;
 }
 
