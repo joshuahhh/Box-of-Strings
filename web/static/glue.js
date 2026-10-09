@@ -368,17 +368,6 @@
   // sent at the last pointer position over the diagram. They react on
   // pointerdown and never take focus, so a hovering pen keeps its place.
   const touchControls = $("touch-controls");
-  function showTouchControls() {
-    touchControls.hidden = false;
-  }
-  if (window.matchMedia && matchMedia("(any-pointer: coarse)").matches) showTouchControls();
-  window.addEventListener(
-    "pointerdown",
-    (e) => {
-      if (e.pointerType === "touch" || e.pointerType === "pen") showTouchControls();
-    },
-    true
-  );
   touchControls.addEventListener("pointerdown", (e) => {
     e.preventDefault();
     const btn = e.target.closest("button");

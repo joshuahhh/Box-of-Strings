@@ -35,9 +35,9 @@
     <pre id="console-output"></pre>
   </section>
 
-  <!-- Shown on touch/pen devices: stand-ins for the scroll wheel and right
-       click, acting where the pen or finger last was on the diagram. -->
-  <div id="touch-controls" hidden>
+  <!-- Stand-ins for the scroll wheel and right click (for tablets), acting
+       where the pointer last was on the diagram. -->
+  <div id="touch-controls">
     <button type="button" data-action="wheel-up" aria-label="Previous rewrite (scroll up)">▲</button>
     <button type="button" data-action="wheel-down" aria-label="Next rewrite (scroll down)">▼</button>
     <button type="button" data-action="right-click" aria-label="Unfold (right click)">Unfold</button>
@@ -75,7 +75,7 @@
       </ul>
 
       <h3>Tablets</h3>
-      <p>On a touch screen, buttons appear at the bottom left: ▲/▼ stand in for
+      <p>The buttons at the bottom left are for tablets: ▲/▼ stand in for
         the scroll wheel and <b>Unfold</b> for right-click. They act where your
         pen last hovered or touched the diagram, so hover over (or tap) a node
         with the pen, then press the buttons with your other hand.</p>
