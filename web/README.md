@@ -50,7 +50,8 @@ to `main`. To turn it on, go to the repository's **Settings → Pages** and set
   to go back to the original files.
 - Backspace and Delete both act as gloss's Delete key.
 - On a Mac, Ctrl+click works as a right click.
-- Touch screens can click and drag, but rewriting needs a mouse wheel (or the
-  arrow keys) and right click, so a mouse or trackpad is needed in practice.
+- For tablets, on-screen ▲/▼/Unfold buttons stand in for the scroll wheel and
+  right click. They act on the last place tapped on the diagram (marked with
+  a small circle).
 - If an action fails with an error, the web version undoes it and reports
   the error in the Console instead of crashing.

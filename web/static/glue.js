@@ -123,6 +123,7 @@
     canvas.style.height = ch + "px";
     canvas.width = Math.round(cw * gfx.dpr);
     canvas.height = Math.round(ch * gfx.dpr);
+    if (BoS.placeTapMarker) BoS.placeTapMarker();
   }
 
   gfx.screenWidth = () => stageSize().w;
@@ -294,6 +295,7 @@
     updateMouse(e);
     pushMotion();
     dragButton = glossButton(e);
+    if (dragButton === 0) setTapTarget();
     pushKey(2, dragButton, "", 0);
     if (dragButton === 2) lastRightDown = e.timeStamp;
     dragging = true;
@@ -367,12 +369,36 @@
   // On-screen buttons for touch and pen: scroll wheel and right click,
   // sent at the last pointer position over the diagram. They react on
   // pointerdown and never take focus, so a hovering pen keeps its place.
+  // The buttons act on the last place tapped/clicked on the diagram (shown
+  // with a small marker), not the last hover position: a hovering pen would
+  // otherwise drag that position along on its way to the buttons.
   const touchControls = $("touch-controls");
+  const tapMarker = $("tap-marker");
+  let tapTarget = null;
+  function setTapTarget() {
+    tapTarget = { x: mouse.x, y: mouse.y };
+    BoS.placeTapMarker();
+  }
+  BoS.placeTapMarker = function () {
+    if (!tapTarget || canvas.hidden) return;
+    const rect = canvas.getBoundingClientRect();
+    tapMarker.style.left = rect.left + rect.width / 2 + tapTarget.x * gfx.fit + "px";
+    tapMarker.style.top = rect.top + rect.height / 2 - tapTarget.y * gfx.fit + "px";
+    tapMarker.hidden = false;
+  };
+  window.addEventListener("scroll", BoS.placeTapMarker, true);
   touchControls.addEventListener("pointerdown", (e) => {
     e.preventDefault();
     const btn = e.target.closest("button");
     if (!btn) return;
     const button = { "wheel-up": 3, "wheel-down": 4, "right-click": 2 }[btn.dataset.action];
+    if (tapTarget) {
+      // Point the app at the tapped spot again (this also refreshes which
+      // rewrites it offers there).
+      mouse.x = tapTarget.x;
+      mouse.y = tapTarget.y;
+      pushMotion();
+    }
     pushKey(2, button, "", 0);
     pushKey(2, button, "", 1);
     btn.classList.add("pressed");

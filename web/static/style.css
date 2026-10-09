@@ -152,6 +152,17 @@ button:disabled { color: var(--muted); cursor: default; }
 #touch-controls button[data-action="right-click"] { font-size: 13px; }
 #touch-controls button.pressed { background: #dde6f5; border-color: var(--accent); }
 
+#tap-marker {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #fff;
+  pointer-events: none;
+}
+
 #toast {
   position: fixed;
   left: 50%;
