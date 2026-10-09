@@ -280,6 +280,7 @@
   // Ctrl+click counts as a right click (as it does elsewhere on macOS).
   const isMac = /Mac/.test(navigator.platform || navigator.userAgent);
   let dragButton = 0;
+  let lastRightDown = -Infinity;
   function glossButton(e) {
     if (e.pointerType !== "mouse") return 0;
     if (e.button === 0 && e.ctrlKey && isMac) return 2;
@@ -294,6 +295,7 @@
     pushMotion();
     dragButton = glossButton(e);
     pushKey(2, dragButton, "", 0);
+    if (dragButton === 2) lastRightDown = e.timeStamp;
     dragging = true;
     try {
       canvas.setPointerCapture(e.pointerId);
@@ -316,7 +318,17 @@
   };
   canvas.addEventListener("pointerup", pointerUp);
   canvas.addEventListener("pointercancel", pointerUp);
-  canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+  // Some browsers deliver a Mac Ctrl+click only as a "contextmenu" event, so
+  // treat that as a right click too, unless the pointer events already did.
+  canvas.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    if (e.timeStamp - lastRightDown < 1000) return;
+    readMods(e);
+    updateMouse(e);
+    pushMotion();
+    pushKey(2, 2, "", 0);
+    pushKey(2, 2, "", 1);
+  });
 
   // Turn wheel movement into discrete wheel clicks: one click per notch of a
   // mouse wheel, and a steady stream for smooth (trackpad) scrolling.
