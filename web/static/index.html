@@ -6,11 +6,11 @@
   <title>Box of Strings</title>
   <meta name="description" content="Box of Strings: rewrite string diagrams with your mouse, in the browser.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='7' y='9' width='18' height='14' fill='none' stroke='%23222' stroke-width='2.5'/%3E%3Cpath d='M12 2v7M20 2v7M16 23v7' stroke='%23222' stroke-width='2.5'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=__VERSION__">
 </head>
 <body>
   <header>
-    <h1>Box of Strings</h1>
+    <h1>Box of Strings <span id="version" title="Build version (commit and build time)">__VERSION_LABEL__</span></h1>
     <nav>
       <button id="btn-help" type="button">Help</button>
       <button id="btn-upload" type="button" title="Add theory files (.txt) from your computer">Open file…</button>
@@ -93,9 +93,9 @@
     </form>
   </dialog>
 
-  <script src="stroke-roman.js"></script>
-  <script src="input-files.js"></script>
-  <script src="glue.js"></script>
-  <script src="app.js" defer></script>
+  <script src="stroke-roman.js?v=__VERSION__"></script>
+  <script src="input-files.js?v=__VERSION__"></script>
+  <script src="glue.js?v=__VERSION__"></script>
+  <script src="app.js?v=__VERSION__" defer></script>
 </body>
 </html>

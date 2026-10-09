@@ -21,6 +21,14 @@ mkdir -p "$BUILD"
 rm -rf "$OUT"
 mkdir -p "$OUT"
 cp web/static/* "$OUT/"
+
+# Stamp the build with the commit and build time: shown in the page header,
+# and appended to asset URLs so browsers fetch fresh copies after a deploy.
+COMMIT="$(git rev-parse --short HEAD 2>/dev/null || echo dev)"
+if [ -n "$(git status --porcelain 2>/dev/null)" ]; then COMMIT="$COMMIT-dirty"; fi
+VERSION="$COMMIT-$(date -u +%Y%m%d%H%M)"
+LABEL="$COMMIT · $(date -u '+%Y-%m-%d %H:%M') UTC"
+sed -i -e "s|__VERSION__|$VERSION|g" -e "s|__VERSION_LABEL__|$LABEL|g" "$OUT/index.html"
 cp "$BUILD/Box_of_Strings.jsexe/all.js" "$OUT/app.js"
 python3 web/bundle_inputs.py input "$OUT/input-files.js"
 touch "$OUT/.nojekyll"
