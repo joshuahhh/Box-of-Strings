@@ -17,7 +17,13 @@
 html, body {
   height: 100%;
   margin: 0;
+  /* No double-tap or pinch zoom: it's an app, and rapid button taps
+     shouldn't zoom the page. */
+  touch-action: none;
 }
+
+/* Let dialogs and the console scroll by touch. */
+dialog, #console-output { touch-action: pan-x pan-y; }
 
 body {
   display: flex;

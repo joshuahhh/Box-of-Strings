@@ -405,6 +405,7 @@
     setTimeout(() => btn.classList.remove("pressed"), 150);
   });
   touchControls.addEventListener("click", (e) => e.preventDefault());
+  touchControls.addEventListener("dblclick", (e) => e.preventDefault());
   touchControls.addEventListener("contextmenu", (e) => e.preventDefault());
 
   const SPECIAL_KEYS = {
